@@ -54,3 +54,99 @@ The asymmetry was calculated for each normal/variant pair. A positive asymmetry 
 All six pairs show a **positive asymmetry**, meaning that the normal molecular species has a slightly higher average count than its corresponding variant.
 
 The largest statistically supported asymmetries are observed for **water** and **methane**. The ozone pair has the largest numerical asymmetry, but also the largest relative uncertainty.
+
+## How the Code Works
+
+The code processes the data in several steps:
+
+### 1. Select the input files
+
+The code uses `output-Set1.txt` to `output-Set9.txt`, excluding `output-Set0.txt`. Each file contains 500,000 events, giving a total of 9 subsamples.
+
+```python
+files = [os.path.join(folder, f"output-Set{i}.txt") for i in range(1, 10)]
+N_subsamples = len(files)
+```
+
+### 2. Count the molecular species
+
+Each file is read line by line. Particle lines contain four values, with the fourth value corresponding to the molecular ID.
+
+```python
+if len(data) == 4:
+    ID = int(data[3])
+    if ID in counts:
+        counts[ID] += 1
+```
+
+### 3. Calculate the average count per event
+
+The number of molecules found in each file is divided by the 500,000 events in that file.
+
+```python
+means[ID].append(counts[ID] / N_events)
+```
+
+This produces one average count per event for each molecule in each subsample.
+
+### 4. Calculate the overall average
+
+The nine subsample averages are averaged to obtain the final molecular count per event.
+
+```python
+avg = sum(means[ID]) / N_subsamples
+```
+
+### 5. Calculate the statistical uncertainty
+
+The standard deviation of the nine subsample means is calculated. The statistical uncertainty on the final average is then obtained by dividing the standard deviation by the square root of the number of subsamples.
+
+```python
+sd = math.sqrt(
+    sum((x - avg) ** 2 for x in means[ID])
+    / (N_subsamples - 1)
+)
+
+error = sd / math.sqrt(N_subsamples)
+```
+
+This is the **sub-sampling method** used to estimate the statistical uncertainty.
+
+### 6. Calculate the asymmetry
+
+For each normal/variant molecule pair, the asymmetry is calculated using:
+
+$$
+A = \frac{N_{\text{normal}} - N_{\text{variant}}}
+{N_{\text{normal}} + N_{\text{variant}}}
+$$
+
+A positive asymmetry means that the normal molecule has a higher average count than its variant.
+
+### 7. Calculate the asymmetry uncertainty
+
+The uncertainty on the asymmetry is calculated using standard error propagation:
+
+$$
+\sigma_A =
+\frac{2}{(N_1+N_2)^2}
+\sqrt{N_2^2\sigma_1^2 + N_1^2\sigma_2^2}
+$$
+
+### 8. Calculate the significance
+
+Finally, the significance of the asymmetry is calculated as:
+
+$$
+\text{Significance} = \frac{|A|}{\sigma_A}
+$$
+
+This compares the measured asymmetry with its statistical uncertainty. A larger value indicates that the asymmetry is larger relative to its uncertainty.
+
+### Conclusion
+
+All six molecule pairs show a **positive asymmetry**, meaning that the normal molecule is slightly more common than its variant.
+
+For **water (24.979)** and **methane (10.050)**, the asymmetry is greater than 3, indicating a statistically significant difference compared with the statistical uncertainty.
+
+For **carbon monoxide (2.283)**, **nitric oxide (2.679)**, **ethylene (2.781)** and **ozone (1.775)**, the asymmetry is below 3. Therefore, based on this 3-significance threshold, the results do not provide sufficient statistical evidence to conclude that these pairs have a significant asymmetry. The observed differences could be consistent with statistical fluctuations.
