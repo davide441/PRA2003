@@ -356,6 +356,242 @@ The analysis successfully determines the average number of each molecular specie
 
 All six normal/variant pairs show a small positive asymmetry, with values ranging from **0.081% to 1.519%**. However, the statistical significance varies between the pairs. The strongest differences are observed for water, methane and carbon monoxide, while the differences for nitric oxide, ethylene and ozone are small compared with their uncertainties.
 
-Question 3: asymmetry as a function of momentum. This question will be answered in next week assignement 
+# Question 3: Asymetry as a function of the momentum
+## Method
+
+### Momentum bins
+
+The momentum P (in units of 10⁻²³ kg m/s) was divided into 10 bins with edges:
+
+```
+[0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8, inf]
+```
+
+The bins are narrow (0.5) at low P, that's where most of the molecules are, and wider at high P, where there are fewer. The last bin (P > 8) is open-ended. The fraction of all N + N′ counted inside the bins is 1.0000 for every pair, so no molecule is lost by the binning.
+
+### Asymmetry in each bin
+
+For every pair and every momentum bin, the asymmetry is
+
+$$
+A = \frac{N - N'}{N + N'}
+$$
+
+where N is the number of normal molecules and N′ the number of variant molecules in that bin.
+
+A is calculated **separately in each sub-sample**. The value shown for a bin is the mean over the sub-samples, and the statistical uncertainty is the standard deviation of the sub-sample values. The significance of a bin is |A| / std.
+
+### Overall (mean) asymmetry
+
+The overall asymmetry of a pair is calculated from all momentum bins together, using the same sub-sample method. This gives one value of A with one uncertainty per pair. It is shown as the orange band in Figure 1.
+
+### Checking that the sub-samples are consistent
+
+Before trusting the sub-sample spread as an uncertainty, the code checks that:
+
+* the sub-samples contain almost the same number of events (max/min = 1.001);
+* the counts per event in each bin are similar in all sub-samples (spread compared with the Poisson expectation, and a z-score per sub-sample and per bin).
+
+For most pairs the spread is close to the Poisson expectation (ratio of about 1). Carbon monoxide has a spread of 1.3 to 3.6 times the Poisson value.
+
+### Testing the momentum dependence
+
+Three tests were applied to the 10 bins of each pair:
+
+1. **χ² against zero asymmetry**: tests whether the points are compatible with A = 0.
+2. **χ² against a constant**: tests whether the points are compatible with a constant asymmetry equal to the overall mean.
+3. **Linear fit** A = a + (dA/dP)·P: a slope significantly different from zero would mean that the asymmetry changes with momentum.
+
+The χ² is
+
+$$
+\chi^2 = \sum_{i=1}^{10} \frac{(A_i - A_{\text{model}})^2}{\sigma_i^2}
+$$
+
+---
+
+## Figures
+
+### Figure 1: Asymmetry as a function of momentum
+
+![Asymmetry as a function of momentum](PRA%20READM%20FIG%201.png)
+
+**What the figure shows.** There is one panel per pair of molecules. The vertical axis is the asymmetry (N − N′)/(N + N′). The horizontal axis is the momentum P in 10⁻²³ kg m/s.
+
+* Each **blue point** is the asymmetry in one momentum bin.
+* The **vertical error bar** is the statistical uncertainty of that bin (how large is the spread between sub-samples).
+* The **horizontal bar** is the width of the momentum bin. The label "last bin: P > 8" reminds the reader that the final bin is open-ended.
+* The **orange band** is the overall asymmetry ± its uncertainty.
+* The **dashed grey line** is zero asymmetry.
+* The number in the corner is the χ² against zero asymmetry for 10 bins.
+
+**How to read it.** All six panels share the same vertical scale, which is set by the large uncertainties of ozone. On this scale the asymmetries of carbon monoxide (about 0.001), water (about 0.01) and methane (about 0.009) look close to zero. The numbers in the table below give the exact values.
+The important result is that in none of the panels do the points show a clear rise or fall with momentum. They pretty much all follow a flat line.
+
+### Figure 2: Momentum spectra of the normal and variant molecules
+
+![Momentum spectra](PRA%20README%20FIG%202.png)
+
+**What the figure shows.** For each pair, the momentum spectrum of the normal molecule (blue) and of the variant (red). The vertical axis (logarithmic) is dN/dP, the number of counts per event per unit of momentum, which means that the counts in each bin are divided by the bin width. This makes bins of different widths comparable. The horizontal bars are the bin widths. The last bin (P > 8) is not drawn.
+
+**What it tells us.**
+
+* The spectra of the normal and the variant molecules **almost overlap in every panel**. The two kinds of molecule are produced with the same momentum distribution, to within the precision visible on a logarithmic plot.
+* The spectra have the same shape for all species: they rise to a maximum at low momentum (around P = 0.5 to 1.5, depending on the pair), then fall steeply by one to two orders of magnitude up to P = 8.
+* The ozone / superoxide panel has the largest error bars, because there are very few of these molecule.
+* A difference of 0.1% to 1% (the size of the asymmetries found here) cannot be seen by eye on a logarithmic spectrum. That is why Figure 1 plots the asymmetry directly.
+
+Figure 2 therefore shows that the normal and variant molecules have the same momentum spectrum overall, and shows where the statistics are large (low and medium P) or small (high P and rare species). Figure 1 quantifies the small difference between them.
+
+---
+
+## Results
+
+### Mean asymmetry of each pair
+
+| Pair | Mean asymmetry A | Statistical uncertainty | Significance |
+| ---- | ---------------: | ----------------------: | -----------: |
+| Carbon monoxide / Carbon-13 monoxide | +0.00081 | ± 0.00012 | 6.8 sigma |
+| Nitric oxide / Ionised NO | +0.00106 | ± 0.00065 | 1.6 sigma |
+| Water / Heavy water (D2O) | +0.01012 | ± 0.00095 | 10.7 sigma |
+| Methane (CH4) / Methyl ion (CH3-) | +0.00893 | ± 0.00112 | 7.9 sigma |
+| Ethylene (C2H4) / Ionised ethylene (C2H3-) | +0.00564 | ± 0.00661 | 0.9 sigma |
+| Ozone (O3) / Superoxide anion (O2-) | +0.01739 | ± 0.03018 | 0.6 sigma |
+
+These agree with the percentage asymmetries given in the answer to questions 1 and 2 (for example 0.081 % for carbon monoxide and 0.998 % for water).
+
+### Asymmetry in each momentum bin
+
+Values are in units of 10⁻³, written as A ± uncertainty.
+
+| P range | CO / ¹³CO | NO / NO⁺ | H₂O / D₂O | CH₄ / CH₃⁻ | C₂H₄ / C₂H₃⁻ | O₃ / O₂⁻ |
+| ------- | --------: | -------: | --------: | ---------: | -----------: | -------: |
+| 0 – 0.5 | 0.11 ± 0.66 | 1.39 ± 2.08 | 6.74 ± 4.72 | 13.14 ± 12.18 | 6.09 ± 51.95 | 105.59 ± 197.03 |
+| 0.5 – 1 | 0.46 ± 0.36 | −0.44 ± 1.58 | 9.07 ± 2.29 | 7.77 ± 7.60 | 4.90 ± 18.20 | 8.88 ± 143.02 |
+| 1 – 1.5 | 0.62 ± 0.65 | −0.90 ± 2.25 | 7.40 ± 4.40 | 5.34 ± 6.05 | 4.95 ± 14.20 | 81.31 ± 86.60 |
+| 1.5 – 2 | 0.60 ± 0.74 | 0.00 ± 1.44 | 9.02 ± 3.34 | 7.58 ± 5.03 | 3.66 ± 26.62 | −1.41 ± 93.32 |
+| 2 – 2.5 | 0.86 ± 0.74 | 0.87 ± 3.39 | 8.08 ± 5.21 | 7.65 ± 5.99 | 2.16 ± 19.59 | −10.34 ± 115.11 |
+| 2.5 – 3 | 0.79 ± 0.99 | −0.07 ± 3.16 | 7.67 ± 5.42 | 4.13 ± 5.65 | −2.70 ± 26.43 | 85.41 ± 112.20 |
+| 3 – 4 | 0.76 ± 0.81 | 1.23 ± 1.72 | 10.26 ± 3.51 | 6.85 ± 8.03 | 7.61 ± 19.55 | 48.03 ± 74.50 |
+| 4 – 6 | 1.27 ± 0.62 | 1.95 ± 1.74 | 10.08 ± 3.63 | 9.87 ± 5.27 | 5.48 ± 14.70 | −10.61 ± 71.14 |
+| 6 – 8 | 1.72 ± 0.93 | 0.04 ± 2.17 | 11.05 ± 4.33 | 7.32 ± 7.50 | 6.23 ± 13.66 | 15.70 ± 73.32 |
+| 8 – inf | 1.75 ± 0.44 | 4.17 ± 1.96 | 13.57 ± 1.23 | 12.80 ± 2.67 | 8.25 ± 11.33 | 1.51 ± 67.45 |
+
+The bins with a significance above 3 sigma are the last bin (P > 8) for carbon monoxide (4.0), water (11.0) and methane (4.8), and the bin 0.5 – 1 for water (4.0). These are the bins with the most counts, they have the smallest uncertainties.
+
+### Quantification of the momentum dependence
+
+| Pair | χ² vs zero (10 bins) | p-value | χ² vs constant | p-value | Slope dA/dP | Slope significance |
+| ---- | -------------------: | ------: | -------------: | ------: | ----------: | -----------------: |
+| CO / ¹³CO | 29.71 | 0.00095 | 8.39 | 0.59 | +0.00020 ± 0.00011 | 1.8 sigma |
+| NO / NO⁺ | 7.03 | 0.72 | 5.36 | 0.87 | +0.00018 ± 0.00032 | 0.6 sigma |
+| H₂O / D₂O | 176.46 | 1.3 × 10⁻³² | 9.49 | 0.49 | +0.00043 ± 0.00062 | 0.7 sigma |
+| CH₄ / CH₃⁻ | 35.67 | 9.6 × 10⁻⁵ | 3.59 | 0.96 | +0.00021 ± 0.00117 | 0.2 sigma |
+| C₂H₄ / C₂H₃⁻ | 1.28 | 0.999 | 0.21 | 1.00 | +0.00034 ± 0.00270 | 0.1 sigma |
+| O₃ / O₂⁻ | 2.24 | 0.994 | 1.59 | 0.999 | −0.00732 ± 0.01483 | 0.5 sigma |
+
+Slopes are in units of 10⁻²³ kg m/s per unit of P.
+
+---
+
+## Step 1: Mean asymmetry and its uncertainty
+
+All six pairs have a **positive** mean asymmetry: the normal molecule is produced slightly more often than its variant. The size and the significance are very different from pair to pair:
+
+* **Water / heavy water:** A = +0.01012 ± 0.00095 (10.7 sigma), about 1 %.
+* **Methane / methyl ion:** A = +0.00893 ± 0.00112 (7.9 sigma), about 0.9 %.
+* **Carbon monoxide / carbon-13 monoxide:** A = +0.00081 ± 0.00012 (6.8 sigma), about 0.08 %. This asymmetry is much smaller than for water and methane, but it is measured very precisely because carbon monoxide is by far the most abundant molecule.
+* **Nitric oxide / ionised NO:** A = +0.00106 ± 0.00065 (1.6 sigma). Not significant.
+* **Ethylene / ionised ethylene:** A = +0.00564 ± 0.00661 (0.9 sigma). Not significant.
+* **Ozone / superoxide anion:** A = +0.01739 ± 0.03018 (0.6 sigma). Not significant. This is the largest asymmetry in size, but also the largest uncertainty, because there are only about 0.001 of these molecules per event.
+
+## Step 2: Asymmetry as a function of momentum
+
+Figure 1 and the χ² tests show that:
+
+* For **carbon monoxide, water and methane**, the asymmetry is **significantly different from zero** (χ² against zero with p < 10⁻³), but **compatible with a constant value** (χ² against a constant with p = 0.49 to 0.96). The asymmetry does not depend significantly on momentum. The linear slopes are 1.8, 0.7 and 0.2 sigma from zero.
+* For carbon monoxide, the points rise from about 0.0001 at low P to about 0.0018 at P > 8. This looks like a trend, but the slope is only 1.8 sigma so this is **not** enough evidence to declare a precise momentum dependence.
+* For **nitric oxide, ethylene and ozone**, all bins are compatible with zero (p = 0.72, 0.999 and 0.994) and also with the overall mean. The uncertainties in these bins are too large to see any momentum dependence either.
+* The most significant bins are at high P, but this is because these bins contain the most counts and not because the asymmetry is larger there.
+
+## Step 3: Is there an asymmetry?
+
+**Yes, for three pairs: water / heavy water, methane / methyl ion and carbon monoxide / carbon-13 monoxide.** In these pairs the normal molecule is produced more often than its variant. The overall significance is 6.8 to 10.7 sigma, and the χ² against zero is rejected with p < 10⁻³. The asymmetry is small (0.08 % to 1 %) and does not depend on momentum within the uncertainties.
+
+**No significant asymmetry is seen for nitric oxide, ethylene and ozone.** Their significance is below 3 sigma, and the data are compatible with zero. This is not proof that there is no asymmetry. For ethylene and ozone in particular, the uncertainties (0.7 % and 3 %) are larger than the asymmetries seen in water and methane, so an asymmetry of that size cannot be excluded with this dataset.
+
+All six asymmetries have the same sign. This may suggest a common origin, but only three are significant on their own.
+
+**Limitations:**
+
+* The uncertainties are statistical only (spread between the sub-samples). Systematic effects are not included.
+* The χ² tests assume that the momentum bins are independent.
+* The number of sub-samples is small, so the uncertainty itself is only known approximately.
+
+ADD FILE 10 LIMITATIONS
+
+---
+
+# How the Code Works
+
+## 1. Defining the momentum bins
+
+```python
+BINS = [0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8, float("inf")]
+```
+
+Each particle is assigned to a bin according to its momentum P. For each sub-sample, the counts N (normal) and N′ (variant) are stored per bin.
+
+## 2. Reading the sub-samples
+
+The input files are read one sub-sample at a time, as in questions 1 and 2. For each event the particle ID and the momentum are read, and empty events are excluded from the number of events. The counts per event are obtained by dividing by the number of non-empty events of the sub-sample.
+
+## 3. Asymmetry in each bin and sub-sample
+
+```python
+asymmetry = (N - N_prime) / (N + N_prime)
+```
+
+This is calculated for each of the 10 bins in each sub-sample, giving an array with one row per sub-sample and one column per bin.
+
+## 4. Mean and uncertainty in each bin
+
+```python
+A_bin = asymmetry.mean(axis=0)
+err_bin = asymmetry.std(axis=0, ddof=1)
+significance = abs(A_bin) / err_bin
+```
+
+`ddof=1` gives the sample standard deviation, as in questions 1 and 2. These are the points and error bars of Figure 1.
+
+## 5. Overall asymmetry
+
+The overall asymmetry is calculated with all momentum bins together, in each sub-sample, and then averaged with its spread as the uncertainty. It is displayed as the orange band in Figure 1.
+
+## 6. Quantifying the momentum dependence
+
+```python
+chi2_zero = np.sum((A_bin / err_bin) ** 2)
+chi2_const = np.sum(((A_bin - A_mean) / err_bin) ** 2)
+```
+
+The p-values are obtained from the χ² distribution with 10 degrees of freedom. A weighted linear fit of A against the bin centres gives the slope and its uncertainty.
+
+## 7. Homogeneity check
+
+The code compares the counts per event in each bin between sub-samples, and calculates the relative spread and the Poisson expectation. A z-score is computed for each sub-sample and bin, and sub-samples with |z| > 2 are flagged. With 6 pairs × 10 bins and several sub-samples, a few flagged values (about 5 %) are expected by chance. The output shows a small number of flags, consistent with this.
+
+## 8. Plots
+
+* **Figure 1** plots A with its error bars against P, for each pair, with the overall mean as an orange band and the χ² against zero.
+* **Figure 2** plots dN/dP (counts per event divided by the bin width) against P for the normal and variant molecules, on a logarithmic vertical axis.
+
+---
+
+## Conclusion
+
+The asymmetry between normal and variant molecules was measured as a function of momentum in 10 bins. A small, positive asymmetry is seen for **water / heavy water (+1.0 %)**, **methane / methyl ion (+0.9 %)** and **carbon monoxide / carbon-13 monoxide (+0.08 %)**, with significances of 10.7, 7.9 and 6.8 sigma. In all three cases the asymmetry is compatible with a constant value over the whole momentum range. No significant slope with momentum is found (at most 1.8 sigma, for carbon monoxide).
+
+For **nitric oxide, ethylene and ozone**, no significant asymmetry is observed (1.6, 0.9 and 0.6 sigma). The statistics of ethylene and ozone are too low to exclude an asymmetry of the size seen in the other pairs.
 
 
