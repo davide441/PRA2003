@@ -527,6 +527,7 @@ All six asymmetries have the same sign. This may suggest a common origin, but on
 * The uncertainties are statistical only (spread between the sub-samples). Systematic effects are not included.
 * The χ² tests assume that the momentum bins are independent.
 * The number of sub-samples is small, so the uncertainty itself is only known approximately.
+* The two plot present on this README file do not take into account output10 (file 10) due to its high rate of error. If file 10 was taken into consideration in this analysis, the second plot would have display larger vertical error bars, even if the plotted mean points look almost identical without the use of file 10. Removing this file from our analysis allowed more clearer results
 
 ADD FILE 10 LIMITATIONS
 
